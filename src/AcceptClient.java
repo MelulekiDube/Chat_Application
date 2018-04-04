@@ -173,7 +173,6 @@ public class AcceptClient extends Thread {
                 break;
             }
             case Values.SAVE_CHAT_HISTORY_PROTOCOL: {
-                System.out.print((String )msg.obMessage);
                 System.out.print(msg.message);
                 saveChat(msg.sender, msg.message);
                 break;
@@ -224,6 +223,7 @@ public class AcceptClient extends Thread {
                 if (!userExist(tempUser)) {
                     newMsge = new Message(Values.SIGN_UP_RESPONSE_PROTCOL, msg.sender, Values.SERVER_USER_NAME, Values.SIGN_UP_RESPONSE_PROTCOL_DONE);
                     CServer.users.add(tempUser);
+                    CServer.addClient(userTemp, obout);
                     CServer.saveUsers();
                     sendMessage(newMsge, getSenderIndex(msg.sender));
                 } else {

@@ -2,6 +2,9 @@
 import java.awt.GridLayout;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
@@ -89,16 +92,8 @@ public class loading {
     }
 
     public static void main(String[] args) throws IOException {
-        ChatGUI cg = new ChatGUI();
-        JFileChooser fileChooser = new JFileChooser();
-        int retval = fileChooser.showSaveDialog(cg);
-        if (retval == JFileChooser.APPROVE_OPTION) {
-            File file = fileChooser.getSelectedFile();
-            if (file == null) {
-            }
-//                if (file.isDirectory())
-////                 
-//                }
-        }
+        Date date = new Date();
+        LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        System.out.println(localDate);
     }
 }

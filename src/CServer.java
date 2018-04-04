@@ -43,7 +43,7 @@ public class CServer {
         connect();
     }
 
-    public final void getUSers() {
+    public final void getUSers() {  
         try {
             FileReader fw = new FileReader(file);
             BufferedReader br = new BufferedReader(fw);
