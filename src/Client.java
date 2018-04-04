@@ -153,7 +153,7 @@ public class Client implements Runnable {
         if (msg.mType.equals(Values.CHAT_HISTORY_PROTOCOL)) {
             String chatMessage = msg.message;
             UpdateTextArea(chatMessage);
-            UpdateTextArea("\t\t"+new Date().toString());
+            UpdateTextArea("\t\t"+new Date().toString()+"\n");
         }
 
         if (msg.mType.equals(Values.OBJECTTYPE_LIST_PROTOCOL)) {
