@@ -35,5 +35,6 @@ public final class Values {
     public final static String BRODCAST_FILE_PROTOCOL = "BrodacastFile";
     public final static String BRODCAST_PROTOCOL = "Brodacast";
     public final static String BRODACAST_TEXT_PROTOCOL = "BrodacastText";
+    public final static String CHAT_HISTORY_PROTOCOL = "ChatHistory";
 
 }

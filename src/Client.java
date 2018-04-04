@@ -18,6 +18,8 @@ public class Client implements Runnable {
         try {
             String tyString = Values.DISCONNECT_PROTOCOL;
             String mesString = "";
+            saveChat(cg.getUserName());
+            cg.clearTextArea();
             Message m = new Message(tyString, Values.SERVER_USER_NAME, cg.getUserName(), "");
             obout.writeObject(m);
             obin.close();
@@ -146,6 +148,13 @@ public class Client implements Runnable {
             UpdateTextArea(displayMessage);
         }
 
+        if(msg.mType.equals(Values.CHAT_HISTORY_PROTOCOL))
+        {
+            String chatMessage=msg.message;
+            UpdateTextArea(chatMessage);
+
+        }
+
         if (msg.mType.equals(Values.OBJECTTYPE_LIST_PROTOCOL)) {
             // ArrayList<String> x=(ArrayList<String>)msg.obMessage;
             ArrayList<String> x = new ArrayList<>();
@@ -202,7 +211,7 @@ public class Client implements Runnable {
         double sizeMb = (file.length()) / (1024 * 1024);
         double limit = 5.0;
         if (Double.compare(sizeMb, limit) > 0) {
-            JOptionPane.showMessageDialog(null, "File is too large to be sent!\n File not sent!!!");
+            JOptionPane.showMessageDialog(null, "File is too large to be sent!\n File not Attached!!!");
             return false;
         } else {
             return true;
@@ -226,6 +235,50 @@ public class Client implements Runnable {
 
     }
 
+    public static void saveChat(String Username)
+    {
+        File userFile=null;
+         try{
+            userFile=new File("../ChatHistory/"+Username+".txt");
+            if(!userFile.exists())
+            {
+                boolean b=userFile.createNewFile();
+            } 
+        }
+
+        catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+
+
+        try(
+            FileWriter fw = new FileWriter(userFile);
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter out = new PrintWriter(bw);
+            )
+        {
+            String ChatMessage=cg.getTA();
+            out.println(ChatMessage);
+        }
+
+        catch (Exception q)
+        {
+            q.printStackTrace();
+        }
+
+                   
+
+        
+       
+
+
+
+        
+
+
+    }
+ 
     public static void UpdateTextArea(String displayMessage) throws IOException {
 
         cg.putToTA(displayMessage);

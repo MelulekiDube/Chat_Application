@@ -12,7 +12,8 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-
+import java.io.*;
+import java.util.*;
 /**
  *
  * @author Meluleki
@@ -177,15 +178,21 @@ public class AcceptClient extends Thread {
                 char[] passtemp = (char[]) msg.obMessage;
                 User tempUser = new User(userTemp, passtemp);
                 Message newMsge;
+                Message chatHistory;
                 Message message = new Message(Values.CONNECTIN_PROTOCOL, "");
                 message.message = msg.sender;
                 for (User checkUser : CServer.users) {
                     if (tempUser.isCorrect(checkUser)) {
                         CServer.addClient(userTemp, obout);
                         newMsge = new Message(Values.LOGIN_RESPONSE_PROTOCOL, msg.sender, Values.SERVER_USER_NAME, Values.LOGIN_RESPONSE_PROTOCOL_YES);
+                       
                         if (getSenderIndex(newMsge.recipent) < CServer.loginNames.size()) {
                             sendMessage(newMsge, CServer.loginNames.indexOf(msg.sender));
+                            //////////////////*/*/********
+                            loadChat(msg.sender);
+                           
                         }
+
                         Message a = new Message(Values.OBJECTTYPE_LIST_PROTOCOL, msg.sender, Values.SERVER_USER_NAME, CServer.loginNames);
                         updateLists(a);
                         return;
@@ -240,6 +247,35 @@ public class AcceptClient extends Thread {
             }
         }
         return CServer.loginNames.size() + 1;
+    }
+
+
+    private void loadChat(String userName)
+    {
+    File chatFile=new File("../ChatHistory/"+userName+".txt");    
+    String chat="";
+    try
+    ( Scanner in=new Scanner(chatFile);)
+    
+    {
+        while(in.hasNextLine())
+        {
+            chat=chat+in.nextLine()+"\n";
+        }
+
+    Message chatHistory=new Message(Values.CHAT_HISTORY_PROTOCOL,userName,Values.SERVER_USER_NAME,chat);    
+    sendMessage(chatHistory,CServer.loginNames.indexOf(userName));
+    }
+
+    catch(FileNotFoundException e)
+    {
+        //System.out.println("File path wrong\n../ChatHistory/"+userName+".txt\"");
+        System.out.println("No chat History Sent As either FilePath wrong or a new User");
+
+
+    }
+
+    
     }
 
     private boolean userExist(User u) {
