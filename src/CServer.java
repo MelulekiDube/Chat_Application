@@ -51,13 +51,13 @@ public class CServer {
             System.out.println("Reading the files");
             while (line != null) {
                 //this.username + ", " + Arrays.toString(this.password)
-                String username = (String) line.subSequence(0, line.indexOf("],"));
-                String pass = line.substring(line.indexOf(", "));
-                pass = pass.replace(", ", "");
+                String tempUser = (String) line.subSequence(0, line.indexOf("],"));
+                String username=getrepString(tempUser);
+                String pass=null;
                 pass = pass.replace("[", "");
                 pass = pass.replace("]", "");
                 char[] password = pass.toCharArray();
-                User tempUser = new User(username, password);
+//                User tempUser = new User(username, password);
                 users.add(tempUser);
                 line = br.readLine();
             }
@@ -70,7 +70,16 @@ public class CServer {
         }
         System.out.println("Done reading");
     }
-
+    private String getrepString(String byteString){
+        String result=null;
+        byteString= byteString.replace("[", "");
+        String [] stringArr= byteString.split(", ");
+        for(String temp: stringArr){
+            byte t= Byte.parseByte(temp);
+            result+=(char)t;
+        }
+        return result;
+    }
     public static void saveUsers() {
         try {
             FileWriter fw = new FileWriter(file);
