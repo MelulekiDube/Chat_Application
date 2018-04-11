@@ -37,5 +37,5 @@ public final class Values {
     public final static String BRODACAST_TEXT_PROTOCOL = "BrodacastText";
     public final static String CHAT_HISTORY_PROTOCOL = "ChatHistory";
     public final static String SAVE_CHAT_HISTORY_PROTOCOL = "SaveChat";
-
+    public final static String FORM = "RSA/ECB/PKCS1Padding";
 }

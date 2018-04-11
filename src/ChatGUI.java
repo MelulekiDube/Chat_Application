@@ -7,11 +7,17 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.PublicKey;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import java.util.*;
+import javax.crypto.Cipher;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.IvParameterSpec;
 import javax.swing.DefaultListModel;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -188,6 +194,12 @@ public class ChatGUI extends javax.swing.JFrame {
         btnSignup.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSignupActionPerformed(evt);
+            }
+        });
+
+        pwdpass.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                pwdpassKeyPressed(evt);
             }
         });
 
@@ -413,6 +425,10 @@ public class ChatGUI extends javax.swing.JFrame {
         btnlogin.setText(btnlogin.getText().equals("login") ? "logout" : "login");
         btnSignup.setEnabled(btnlogin.getText().equals("login"));
     }//GEN-LAST:event_btnloginActionPerformed
+
+    private void pwdpassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pwdpassKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pwdpassKeyPressed
     void setLookAndFell() {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -561,5 +577,16 @@ public class ChatGUI extends javax.swing.JFrame {
        pwdpass.setText("");
        btnlogin.setText("login");
        btnSignup.setEnabled(true);
+    }
+    byte[] encrypt(byte[] array, PublicKey key, String temp) throws Exception {
+
+        Cipher ciph = Cipher.getInstance(temp);
+        byte[] iv = new byte[32];
+        SecureRandom sr = new SecureRandom();
+        sr.nextBytes(iv);
+        IvParameterSpec ips = new IvParameterSpec(iv);
+        ciph.init(Cipher.ENCRYPT_MODE, key, sr);
+        return ciph.doFinal(array);
+
     }
 }

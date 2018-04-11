@@ -50,6 +50,10 @@ public class User {
 
     @Override
     public String toString() {
-        return this.username + ", " + Arrays.toString(this.password);
+        return (Arrays.toString(this.username.getBytes())) + ", " + Arrays.toString(new String(this.password).getBytes());
+    }
+    public static void main(String[]args){
+        User u= new User("Mellar", "mellar".toCharArray());
+        System.out.println(u);
     }
 }

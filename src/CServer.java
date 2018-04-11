@@ -51,8 +51,8 @@ public class CServer {
             System.out.println("Reading the files");
             while (line != null) {
                 //this.username + ", " + Arrays.toString(this.password)
-                String username = (String) line.subSequence(0, line.indexOf(","));
-                String pass = line.substring(line.indexOf(","));
+                String username = (String) line.subSequence(0, line.indexOf("],"));
+                String pass = line.substring(line.indexOf(", "));
                 pass = pass.replace(", ", "");
                 pass = pass.replace("[", "");
                 pass = pass.replace("]", "");

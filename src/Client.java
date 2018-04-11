@@ -145,7 +145,7 @@ public class Client implements Runnable {
             String sender = msg.sender;
             String recipent = msg.recipent;
             Date d= new Date();
-            String SRInfo =": [" + sender + " to " + recipent + "]:";
+            String SRInfo ="[" + sender + " to " + recipent + "]:";
             String displayMessage = SRInfo + textMessage + "\n";
             UpdateTextArea(displayMessage);
         }
